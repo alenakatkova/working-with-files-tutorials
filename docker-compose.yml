@@ -18,6 +18,7 @@ services:
       - "8080:8080"
     volumes:
       - ./server:/server
+      - ./server/uploads:/server/uploads
       - /server/node_modules
     depends_on:
       - postgres-db

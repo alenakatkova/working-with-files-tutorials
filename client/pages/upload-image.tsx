@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
@@ -9,25 +9,15 @@ const UploadImage: NextPage = () => {
 
   async function saveUser(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("saved in state ", image)
-
     const formData = new FormData()
-    console.log("formData ", formData);
-
-    if (image != null) await uploadImage(image);
-    //await createUser(newUser).then(res => res && setIdOfLastCreatedUser(res.data.newUserId));
-    reset();
+    formData.append("image", image);
+    if (image != null) await uploadImage(formData);
   }
 
   function handleChange(event : React.ChangeEvent<HTMLInputElement>) {
-    console.log(event.target.files)
    if (event.target.files != null) {
       setImage(event.target.files[0]);
    }
-  }
-
-  function reset() {
-    // reset
   }
 
   return (
@@ -45,8 +35,8 @@ const UploadImage: NextPage = () => {
           <div className={styles.contentContainer}>
             <form method="post" encType="multipart/form-data" className={styles.userForm} onSubmit={saveUser}>
               <div className={styles.formLine}>
-                <label htmlFor="username">Your image:</label>
-                <input type="file" name="image-to-upload" onChange={handleChange} />
+                <label htmlFor="image">Your image:</label>
+                <input type="file" name="image" onChange={handleChange} />
               </div>
               <button>Save</button>
             </form>
