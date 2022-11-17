@@ -14,14 +14,24 @@ const UploadImage: NextPage = () => {
   });
   const [idOfLastCreatedUser, setIdOfLastCreatedUser] = useState<number | null>(null)
 
+
+  const [image, setImage] = useState<File | null>(null);
+
+
+
   async function saveUser(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    await createUser(newUser).then(res => res && setIdOfLastCreatedUser(res.data.newUserId));
+    console.log(image)
+    //await createUser(newUser).then(res => res && setIdOfLastCreatedUser(res.data.newUserId));
     reset();
   }
 
   function handleChange(event : React.ChangeEvent<HTMLInputElement>) {
-    setNewUser({...newUser, [event.target.name] : event.target.value});
+    //setNewUser({...newUser, [event.target.name] : event.target.value});
+    console.log(event.target.files)
+   if (event.target.files != null) {
+      setImage(event.target.files[0]);
+   }
   }
 
   function reset() {
@@ -46,27 +56,11 @@ const UploadImage: NextPage = () => {
           </h1>
 
           <div className={styles.contentContainer}>
-            <form method="post" className={styles.userForm} onSubmit={saveUser}>
+            <form method="post" encType="multipart/form-data" className={styles.userForm} onSubmit={saveUser}>
               <div className={styles.formLine}>
-                <label htmlFor="username">Username:</label>
-                <input name="username" id="username"  onChange={handleChange} value={newUser.username} />
+                <label htmlFor="username">Your image:</label>
+                <input type="file" name="image-to-upload" onChange={handleChange} />
               </div>
-
-              <div className={styles.formLine}>
-                <label htmlFor="password">Password:</label>
-                <input name="password" id="password"  onChange={handleChange} value={newUser.password} />
-              </div>
-
-              <div className={styles.formLine}>
-                <label htmlFor="email">E-mail:</label>
-                <input name="email" id="email"  onChange={handleChange} value={newUser.email} />
-              </div>
-
-              <div className={styles.formLine}>
-                <label htmlFor="age">Age:</label>
-                <input name="age" id="age" type="number" onChange={handleChange} value={newUser.age} />
-              </div>
-
               <button>Save</button>
             </form>
 
