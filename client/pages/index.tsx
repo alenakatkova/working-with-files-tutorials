@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { getUsers, createUser } from "./api/users";
-import { UserFromDB, User } from "../interfaces/user";
+import { createUser } from "./api/users";
+import { User } from "../interfaces/user";
 import UsersList from "../components/UsersList";
 
 const Home: NextPage = () => {
