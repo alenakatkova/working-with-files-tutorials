@@ -2,32 +2,24 @@ import React, { useState, useEffect, useCallback } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { createUser } from "./api/users";
-import { User } from "../interfaces/user";
+import { uploadImage } from "../api/uploads";
 
 const UploadImage: NextPage = () => {
-  const [newUser, setNewUser] = useState<User>({
-    username: "",
-    email: "",
-    password: "",
-    age: 0
-  });
-  const [idOfLastCreatedUser, setIdOfLastCreatedUser] = useState<number | null>(null)
-
-
   const [image, setImage] = useState<File | null>(null);
-
-
 
   async function saveUser(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(image)
+    console.log("saved in state ", image)
+
+    const formData = new FormData()
+    console.log("formData ", formData);
+
+    if (image != null) await uploadImage(image);
     //await createUser(newUser).then(res => res && setIdOfLastCreatedUser(res.data.newUserId));
     reset();
   }
 
   function handleChange(event : React.ChangeEvent<HTMLInputElement>) {
-    //setNewUser({...newUser, [event.target.name] : event.target.value});
     console.log(event.target.files)
    if (event.target.files != null) {
       setImage(event.target.files[0]);
@@ -35,12 +27,7 @@ const UploadImage: NextPage = () => {
   }
 
   function reset() {
-    setNewUser({
-      username: "",
-      email: "",
-      password: "",
-      age: 0
-    })
+    // reset
   }
 
   return (

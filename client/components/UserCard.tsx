@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { User, UserFromDB } from "../interfaces/user";
 import styles from "../styles/UserCard.module.css";
-import { deleteUser, editUser } from "../pages/api/users";
+import { deleteUser, editUser } from "../api/users";
 
 interface UserCardProps {
   user: UserFromDB;

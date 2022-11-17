@@ -1,4 +1,4 @@
-import { User, UserFromDB } from "../../../interfaces/user";
+import { User, UserFromDB } from "../../interfaces/user";
 import { instance } from "../utils";
 
 export async function getUsers() {
